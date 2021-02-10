@@ -8,6 +8,6 @@ RUN chmod +x boot.sh
 RUN conda env create -f environment.yml
 SHELL ["conda", "run", "-n", "rnamigos", "/bin/bash", "-c"]
 
-EXPOSE 5001
+EXPOSE 5002
 
 ENTRYPOINT ["conda", "run", "--no-capture-output", "-n", "rnamigos", "./boot.sh"]
