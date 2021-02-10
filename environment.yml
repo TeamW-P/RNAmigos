@@ -1,5 +1,7 @@
 name: rnamigos_minimal
 channels:
+  - anaconda
+  - bioconda
   - pytorch
   - dglteam
   - conda-forge
@@ -94,3 +96,5 @@ dependencies:
   - xz=5.2.5=h1de35cc_0
   - zipp=3.1.0=py_0
   - zlib=1.2.11=h1de35cc_3
+  - gunicorn=20.0.4
+  - flask=1.1.2
