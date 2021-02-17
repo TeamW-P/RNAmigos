@@ -1,4 +1,4 @@
-name: rnamigos_minimal
+name: rnamigos
 channels:
   - anaconda
   - bioconda
