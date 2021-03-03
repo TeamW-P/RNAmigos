@@ -20,7 +20,6 @@ def rnamigos():
     
     G_list = []
     G = None
-    res = {}
     if 'graph' in request.files:
         try:
             f = request.files['graph']
@@ -59,7 +58,8 @@ def rnamigos():
     except:
         print(traceback.format_exc())
 
-    return jsonify(result_rnamigos)
+    #print(result_rnamigos)
+    return result_rnamigos
 
 @app.route('/', methods=['GET'])
 def hello():

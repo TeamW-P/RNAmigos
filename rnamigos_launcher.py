@@ -1,5 +1,6 @@
 import os
 import pickle
+import json
 
 import networkx as nx
 
@@ -20,7 +21,7 @@ def launch(G, library_path, n_hits=30):
     fp_pred = fp_pred.detach().numpy() > 0.5
     hits = screen(fp_pred, library, n_hits=n_hits)
 
-    result_json = __results_to_json(hits, G, fp_pred);
+    result_json = __results_to_json(hits, G, fp_pred.tolist());
 
     return result_json
 
@@ -32,7 +33,7 @@ def __results_to_json(hits, G, fp_pred):
 
     result_json['hits'] = hits
     result_json['graph'] = nx.node_link_data(G)
-    result_json['fingerprint'] = list(fp_pred)
+    result_json['fingerprint'] = json.dumps(fp_pred)
 
     return result_json
 

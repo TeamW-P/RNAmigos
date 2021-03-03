@@ -6,10 +6,15 @@ import pickle
 import networkx as nx
 import torch
 import dgl
+import itertools
 
 from rgcn import Model
 
 nuc_map = {n:i for i,n in enumerate(['A', 'C', 'G', 'N', 'U'])}
+
+faces = ['W', 'S', 'H']                                                         
+orientations = ['C', 'T']                                                       
+VALID_LABELS = ['B53'] + [orient + e1 + e2 for e1, e2 in itertools.product(faces, faces) for orient in orientations]
 
 def send_graph_to_device(g, device):
     """
@@ -51,12 +56,34 @@ def load_model(run):
     model.load_state_dict(model_dict['model_state_dict'])
     return model, meta
 
+def to_RNAmigos(label):
+    res_label = label.upper()
+    if label != 'B53':
+        start = str(res_label[:(len(res_label)-2)])
+        end = ''.join(sorted(res_label[len(start):]))
+        res_label = start + end
+    return res_label
+
+def is_valid_edge(label):
+  return to_RNAmigos(label) in VALID_LABELS
+
+def filteredEdges(dictObj, callback):
+    newDict = dict()
+    # Iterate over all the items in dictionary
+    for (key, value) in dictObj.items():
+        # Check if item satisfies the given condition then add to new dict
+        if callback((key, value)):
+            newDict[key] = value
+    return newDict
+
 def inference_on_graph(model, graph, edge_map, device='cpu'):
     """
         Do inference on one networkx graph.
     """
+    edge_map_filtered =  filteredEdges(edge_map, lambda elem : is_valid_edge(elem[0]))
+
     graph_nx = graph.to_undirected()
-    one_hot = {edge: torch.tensor(edge_map[label]) for edge, label in
+    one_hot = {edge: torch.tensor(edge_map_filtered[to_RNAmigos(label)]) for edge, label in
                (nx.get_edge_attributes(graph_nx, 'label')).items()}
     one_hot_nucs  = {node: torch.tensor(nuc_map[label], dtype=torch.float32) for node, label in
                (nx.get_node_attributes(graph_nx, 'nuc')).items()}

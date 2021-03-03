@@ -15,6 +15,8 @@ def screen(fp_pred, library, n_hits=30):
     """
     jaccard_partial = partial(jaccard, fp_pred)
     distances = map(jaccard_partial, (f[1] for f in library.items()))
+    for smiles in library:
+        library[smiles] = library[smiles].tolist()
     lib_dists = zip(library.items(), distances)
     hits = sorted(lib_dists, key=lambda x:x[1])[:n_hits]
     return hits
