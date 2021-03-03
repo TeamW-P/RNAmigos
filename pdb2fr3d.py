@@ -37,7 +37,7 @@ def parse_fr3d(fr3d_path, pdb_path):
                 G.add_edge((chain_1, pos_1), (chain_2, pos_2), label=label)
                 nucs[(chain_1, str(pos_1))] = nuc_1[0].strip()
                 nucs[(chain_2, str(pos_2))] = nuc_2[0].strip()
-    nx.set_node_attributes(G, nucs, 'nt')
+    nx.set_node_attributes(G, nucs, 'nuc')
 
     # use BioPython to fill in the backbones
     parser = MMCIFParser(QUIET=True)

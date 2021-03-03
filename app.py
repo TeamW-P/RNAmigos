@@ -2,11 +2,13 @@ import os
 import sys
 import traceback
 import json
+import networkx as nx
 
 from flask import Flask, request, jsonify
 
 from rnamigos_launcher import launch
 from networkx.readwrite import json_graph
+import networkx as nx
 
 import tempfile
 
@@ -14,23 +16,25 @@ app = Flask(__name__)
 
 @app.route("/rnamigos", methods=['POST'])
 def rnamigos():
+    result_rnamigos = {}
+    
+    G_list = []
     G = None
+    res = {}
     if 'graph' in request.files:
         try:
             f = request.files['graph']
-            temp = tempfile.NamedTemporaryFile()
-            tempname = temp.name
-            f.seek(0)
-            temp.write(f.read())
-            temp.seek(0)
-            data = json.load(temp)
-            print(data)
-            G = json_graph.node_link_data(data)
-            print(G)
-
+            data = json.load(f)
+            for graph_id, graph_dict in data['graphs'].items():
+                G = nx.Graph()
+                G.add_edges_from(graph_dict['edges'])
+                G.add_nodes_from(graph_dict['nodes'])
+                G_list.append((graph_id,G))
         except Exception as e:
             print("Failed to upload the graph file")
+            print(e)
             pass
+
 
     library = None
     if 'library' in request.files:
@@ -47,17 +51,15 @@ def rnamigos():
             print("Failed to upload the library file")
             pass
 
-    """
     try:
-        result_json = launch(G, library)
-        return result_json
+        for graph_id, G in G_list:
+            result_json = launch(G, library)
+            result_rnamigos[graph_id] = result_json
 
     except:
         print(traceback.format_exc())
-    """
 
-    result_json = launch(G, library)
-    return result_json
+    return jsonify(result_rnamigos)
 
 @app.route('/', methods=['GET'])
 def hello():

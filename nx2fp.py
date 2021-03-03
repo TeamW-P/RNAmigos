@@ -59,7 +59,7 @@ def inference_on_graph(model, graph, edge_map, device='cpu'):
     one_hot = {edge: torch.tensor(edge_map[label]) for edge, label in
                (nx.get_edge_attributes(graph_nx, 'label')).items()}
     one_hot_nucs  = {node: torch.tensor(nuc_map[label], dtype=torch.float32) for node, label in
-               (nx.get_node_attributes(graph_nx, 'nt')).items()}
+               (nx.get_node_attributes(graph_nx, 'nuc')).items()}
 
     nx.set_edge_attributes(graph_nx, name='one_hot', values=one_hot)
     nx.set_node_attributes(graph_nx, name='one_hot', values=one_hot_nucs)
