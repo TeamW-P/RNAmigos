@@ -99,7 +99,7 @@ def rnamigos_pipeline():
     processed_graphs = {}
 
     try:
-        bp_output = eval(request.form.get("graphs"))
+        bp_output = eval(request.form.get("graphs"))['motif_graphs']
         processed_graphs = {}
         for sequence in bp_output.keys():
             graph_list = []
