@@ -1,5 +1,7 @@
 """ Take predicted ligand and return drawing + database hits. """
 
+from openbabel import pybel
+
 from functools import partial
 import pickle
 

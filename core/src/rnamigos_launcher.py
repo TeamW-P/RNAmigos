@@ -4,8 +4,8 @@ import json
 
 import networkx as nx
 
-from nx2fp import *
-from fp2lig import *
+from .nx2fp import *
+from .fp2lig import *
 
 
 def launch(G, library_path, n_hits=30):
@@ -14,7 +14,7 @@ def launch(G, library_path, n_hits=30):
     fp_pred, _ = inference_on_graph(model, G, meta['edge_map'])
 
     if library_path is None:
-        library = pickle.load(open(os.path.join("static", "libraries", "pdb_rna.p"), 'rb'))
+        library = pickle.load(open(os.path.join("core", "static", "libraries", "pdb_rna.p"), 'rb'))
     else:
         library = smiles_to_library(library_path)
 
