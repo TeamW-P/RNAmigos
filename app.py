@@ -1,8 +1,11 @@
 from flask import Flask, jsonify
-#from routes import *
+from routes import route
+import os
+
+current_directory = os.path.dirname(__file__)
 
 app = Flask(__name__)
-#app.register_blueprint(routes)
+app.register_blueprint(route.routes)
 
 @app.route('/', methods=['GET'])
 def hello():

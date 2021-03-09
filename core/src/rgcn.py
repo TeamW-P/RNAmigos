@@ -2,14 +2,10 @@
 Script for RGCN model.
 
 """
-from functools import partial
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-import dgl
-import dgl.function as fn
 from dgl.nn.pytorch.glob import SumPooling,GlobalAttentionPooling
-from dgl import mean_nodes
 from dgl.nn.pytorch.conv import RelGraphConv
 
 class Attributor(nn.Module):
@@ -106,6 +102,7 @@ class Embedder(nn.Module):
         del h
         embeddings = g.ndata.pop('h')
         return embeddings
+
 ###############################################################################
 # Define full R-GCN model
 # ~~~~~~~~~~~~~~~~~~~~~~~
@@ -172,6 +169,7 @@ class Model(nn.Module):
         # self.draw_rec(target_K, K_predict)
         return reconstruction_loss
     # Below are loss computation function related to this model
+    
     @staticmethod
     def matrix_dist(a, plus_one=False):
         """
