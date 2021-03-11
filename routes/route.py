@@ -20,8 +20,8 @@ def resource_not_found(e):
     return jsonify(error=str(e)), 400
 
 
-@routes.route("/rnamigos_service", methods=['POST'])
-def rnamigos_service():
+@routes.route("/rnamigos_file", methods=['POST'])
+def rnamigos_file():
     '''
     Runs RNAMigos as an individual service for testing purposes.
 
@@ -38,11 +38,12 @@ def rnamigos_service():
 
     try:
         f = request.files['graphs']
+        print(f)
         bp_output = json.load(f)['motif_graphs']
         processed_graphs = {}
         for sequence in bp_output.keys():
             graph_list = []
-            motif_graph_mapping = bp_output.get(sequence)
+            motif_graph_mapping = bp_output[sequence]
             for module_id, graph_dict in motif_graph_mapping.items():
                 graph = nx.Graph()
                 graph.add_edges_from(graph_dict['edges'])
@@ -71,7 +72,7 @@ def rnamigos_service():
 
     try:
         for sequence in processed_graphs.keys():
-            graph_list = processed_graphs.get(sequence)
+            graph_list = processed_graphs[sequence]
             for module_id, graph in graph_list:
                 result_rnamigos[module_id] = rnamigos_launcher.launch(graph, library_path)
             final_output[sequence] = result_rnamigos
@@ -97,13 +98,13 @@ def rnamigos_pipeline():
 
     result_rnamigos = {}
     processed_graphs = {}
-
+    print("Hello from RNAMIGOS repo!")
     try:
-        bp_output = eval(request.form.get("graphs"))['motif_graphs']
+        bp_output = eval(request.form.get("graphs"))
         processed_graphs = {}
         for sequence in bp_output.keys():
             graph_list = []
-            motif_graph_mapping = bp_output.get(sequence)
+            motif_graph_mapping = bp_output[sequence]
             for module_id, graph_dict in motif_graph_mapping.items():
                 graph = nx.Graph()
                 graph.add_edges_from(graph_dict['edges'])
@@ -117,26 +118,27 @@ def rnamigos_pipeline():
 
     ligand_library = None
 
+    temp = tempfile.NamedTemporaryFile()
+
     if 'library' in request.files:
         try:
-            ligand_library.seek(0)
-            temp = tempfile.NamedTemporaryFile()
+            ligand_library = request.files['library']
             ligand_library.seek(0)
             temp.write(ligand_library.read())
             temp.seek(0)
-            ligand_library = temp.name
-            print(ligand_library)
+            library_path = temp.name
 
         except Exception as e:
             abort(400, "Could not process ligand library: " + str(e))
 
     try:
         for sequence in processed_graphs.keys():
-            graph_list = processed_graphs.get(sequence)
+            graph_list = processed_graphs[sequence]
             for module_id, graph in graph_list:
-                result_rnamigos[module_id] = launch(graph, ligand_library)
+                result_rnamigos[module_id] = rnamigos_launcher.launch(graph, ligand_library)
             final_output[sequence] = result_rnamigos
     except Exception as e:
+        print("yo")
         abort(400, "RNAMigos failed to complete: " + str(e))
 
     temp.close()
