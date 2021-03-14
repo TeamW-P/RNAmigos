@@ -12,6 +12,7 @@ import networkx as nx
 
 import tempfile
 
+
 app = Flask(__name__)
 routes = Blueprint("routes", __name__)
 
@@ -19,8 +20,7 @@ routes = Blueprint("routes", __name__)
 def resource_not_found(e):
     return jsonify(error=str(e)), 400
 
-
-@routes.route("/rnamigos_file", methods=['POST'])
+@routes.route("/rnamigos-file", methods=['POST'])
 def rnamigos_file():
     '''
     Runs RNAMigos as an individual service for testing purposes.
@@ -29,7 +29,6 @@ def rnamigos_file():
 
     :returns: jsonified output of RNAMigos in terms of each motif per sequence.
     '''
-
     if ("graphs" not in request.files):
         abort(400, "Did not receive any graphs to process.")
 
@@ -83,8 +82,8 @@ def rnamigos_file():
     return jsonify(final_output)
 
 
-@routes.route("/rnamigos_pipeline", methods=['POST'])
-def rnamigos_pipeline():
+@routes.route("/rnamigos-string", methods=['POST'])
+def rnamigos_string():
     '''
     Runs RNAMigos in the context of the pipeline for testing purposes.
 
