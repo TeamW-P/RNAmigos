@@ -37,7 +37,6 @@ def rnamigos_file():
 
     try:
         f = request.files['graphs']
-        print(f)
         bp_output = json.load(f)['motif_graphs']
         processed_graphs = {}
         for sequence in bp_output.keys():
@@ -97,7 +96,7 @@ def rnamigos_string():
 
     result_rnamigos = {}
     processed_graphs = {}
-    print("Hello from RNAMIGOS repo!")
+
     try:
         bp_output = eval(request.form.get("graphs"))
         processed_graphs = {}
@@ -115,7 +114,7 @@ def rnamigos_string():
 
     final_output = {}
 
-    ligand_library = None
+    library_path = None
 
     temp = tempfile.NamedTemporaryFile()
 
@@ -134,7 +133,7 @@ def rnamigos_string():
         for sequence in processed_graphs.keys():
             graph_list = processed_graphs[sequence]
             for module_id, graph in graph_list:
-                result_rnamigos[module_id] = rnamigos_launcher.launch(graph, ligand_library)
+                result_rnamigos[module_id] = rnamigos_launcher.launch(graph, library_path)
             final_output[sequence] = result_rnamigos
     except Exception as e:
         print("yo")
