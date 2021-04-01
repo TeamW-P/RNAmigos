@@ -37,7 +37,7 @@ def rnamigos_file():
 
     try:
         f = request.files['graphs']
-        bp_output = json.load(f)['motif_graphs']
+        bp_output = json.load(f)['graphs']
         processed_graphs = {}
         for sequence in bp_output.keys():
             graph_list = []
