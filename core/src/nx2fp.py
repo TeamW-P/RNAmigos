@@ -42,8 +42,8 @@ def load_model(run):
         Load full trained model with id `run`
 
     """
-    meta = pickle.load(open(f'core/static/models/{run}/meta.p', 'rb'))
-
+    with open(f'core/static/models/{run}/meta.p', 'rb') as f:
+        meta = pickle.load(f)
     edge_map = meta['edge_map']
     num_edge_types = len(edge_map)
     model_dict = torch.load(f'core/static/models/{run}/{run}.pth', map_location='cpu')
