@@ -3,6 +3,7 @@ import sys
 import traceback
 import json
 import networkx as nx
+import errno
 
 from flask import Flask, request, jsonify, abort, Blueprint
 
@@ -65,6 +66,11 @@ def rnamigos_string():
             temp.write(ligand_library.read())
             temp.seek(0)
             library_path = temp.name
+            final_output['rnamigos_library'] = ligand_library.filename
+            if ligand_library.filename.split('.')[-1] != "txt":
+                raise ValueError("Rnamigos library needs to be in .txt format")
+            if os.stat(library_path).st_size == 0:
+                raise ValueError("Rnamigos library can't be empty")
 
         except Exception as e:
             abort(400, "Could not process ligand library: " + str(e))
@@ -76,7 +82,6 @@ def rnamigos_string():
                 result_rnamigos[module_id] = rnamigos_launcher.launch(graph, library_path)
             final_output[sequence] = result_rnamigos
     except Exception as e:
-        print("yo")
         abort(400, "RNAMigos failed to complete: " + str(e))
 
     temp.close()

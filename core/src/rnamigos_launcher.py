@@ -40,7 +40,7 @@ def launch(G, library_path, n_hits=30):
                 hit["score"] = smiles_data
             i += 1
         hits_formatted.append(hit)
-    result_json = __results_to_json(hits_formatted, G, fp_pred.tolist());
+    result_json = __results_to_json(hits_formatted, G, fp_pred.tolist());  
 
     return result_json
 
