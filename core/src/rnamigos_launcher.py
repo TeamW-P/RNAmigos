@@ -19,7 +19,8 @@ def launch(G, library_path, n_hits=30):
     fp_pred, _ = inference_on_graph(model, G, meta['edge_map'])
 
     if library_path is None:
-        library = pickle.load(open(os.path.join("core", "static", "libraries", "pdb_rna.p"), 'rb'))
+        with open(os.path.join("core", "static", "libraries", "pdb_rna.p"), 'rb') as f:
+            library = pickle.load(f)
     else:
         library = smiles_to_library(library_path)
 
@@ -39,7 +40,7 @@ def launch(G, library_path, n_hits=30):
                 hit["score"] = smiles_data
             i += 1
         hits_formatted.append(hit)
-    result_json = __results_to_json(hits_formatted, G, fp_pred.tolist());
+    result_json = __results_to_json(hits_formatted, G, fp_pred.tolist());  
 
     return result_json
 
