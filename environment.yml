@@ -71,10 +71,10 @@ dependencies:
   - pyopenssl
   - pyparsing
   - pysocks
-  - python
+  - python=3.7
   - python-dateutil
   - python_abi
-  - pytorch=1.5.1
+  - pytorch=1.8.1
   - pytz
   - readline
   - requests
