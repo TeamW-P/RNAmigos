@@ -31,12 +31,12 @@ class StringInputTests(unittest.TestCase):
         f.close()
         
         self.assertEqual(200, response.status_code)
-        self.assertEqual("graphs" in expected_response,
-                         "graphs" in response.json)
+        self.assertEqual("input_seq" in expected_response,
+                         "input_seq" in response.json)
         self.assertEqual("rnamigos_library" not in expected_response,
                         "rnamigos_library" not in response.json)
-        self.assertEqual("hits" in expected_response["graphs"]["48"],
-                         "hits" in response.json["graphs"]["48"])
+        self.assertEqual("hits" in expected_response["input_seq"]["48"],
+                         "hits" in response.json["input_seq"]["48"])
 
     def test_success_graphs_no_lib(self):
         '''
@@ -52,12 +52,12 @@ class StringInputTests(unittest.TestCase):
         f.close()
         
         self.assertEqual(200, response.status_code)
-        self.assertEqual("graphs" in expected_response,
-                         "graphs" in response.json)
+        self.assertEqual("input_seq" in expected_response,
+                         "input_seq" in response.json)
         self.assertEqual("rnamigos_library" not in expected_response,
                         "rnamigos_library" not in response.json)
-        self.assertEqual("hits" in expected_response["graphs"]["36"],
-                         "hits" in response.json["graphs"]["36"])
+        self.assertEqual("hits" in expected_response["input_seq"]["36"],
+                         "hits" in response.json["input_seq"]["36"])
 
     def test_success_graph_lib(self):
         '''
@@ -75,12 +75,12 @@ class StringInputTests(unittest.TestCase):
         
         
             self.assertEqual(200, response.status_code)
-            self.assertEqual("graphs" in expected_response,
-                            "graphs" in response.json)
+            self.assertEqual("input_seq" in expected_response,
+                            "input_seq" in response.json)
             self.assertEqual("rnamigos_library" in expected_response,
                             "rnamigos_library" in response.json)
-            self.assertEqual("hits" in expected_response["graphs"]["48"],
-                            "hits" in response.json["graphs"]["48"])
+            self.assertEqual("hits" in expected_response["input_seq"]["48"],
+                            "hits" in response.json["input_seq"]["48"])
     
     def test_success_empty_graph_no_lib(self):
         '''
@@ -96,8 +96,8 @@ class StringInputTests(unittest.TestCase):
         f.close()
         
         self.assertEqual(200, response.status_code)
-        self.assertEqual('graphs' in expected_response,
-                         'graphs' in response.json)
+        self.assertEqual("input_seq" in expected_response,
+                            "input_seq" in response.json)
 
     def test_fail_graph_invalid_lib(self):
         '''
