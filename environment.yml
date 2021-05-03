@@ -6,7 +6,6 @@ channels:
   - dglteam
   - conda-forge
   - defaults
-  - conda-forge/labels/broken
 dependencies:
   - absl-py=0.9.0
   - biopython=1.76
