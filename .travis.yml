@@ -1,6 +1,6 @@
-# travis does not support python on osx, since we use Anaconda, let it handle installing it
-language: generic
-os: osx
+language: python
+python:
+ - "3.6"
 # sets up anaconda
 before_install:
 # IMPORTANT: this config installs anaconda in silent mode, this is essential for travis to be able to install it
