@@ -1,4 +1,5 @@
 # RNAmigos: RNA Small Molecule Ligand Prediction
+[![Build Status](https://travis-ci.com/TeamW-P/RNAmigos.svg?branch=main)](https://travis-ci.com/TeamW-P/RNAmigos)
 
 This repository is an implementation of ligand prediction from an RNA base pairing network.
 
