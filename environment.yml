@@ -98,6 +98,6 @@ dependencies:
   - zlib=1.2.11
   - gunicorn=20.0.4
   - flask=1.1.2
-  - rdkit
+  - rdkit=2020.03.1.0
   - pip:
     - conf==0.4.1
