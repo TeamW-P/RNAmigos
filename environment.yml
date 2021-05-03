@@ -71,7 +71,7 @@ dependencies:
   - pyopenssl=19.1.0
   - pyparsing=2.4.7
   - pysocks=1.7.1
-  - python=3.6
+  - python=3.8
   - python-dateutil=2.8.1
   - python_abi=3.6
   - pytorch=1.5.1
