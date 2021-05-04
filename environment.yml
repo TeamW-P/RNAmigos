@@ -1,7 +1,6 @@
 name: rnamigos
 channels:
   - pytorch
-  - openbabel
   - dglteam
   - conda-forge
   - rdkit
@@ -61,7 +60,7 @@ dependencies:
   - numpy=1.15.4
   - numpy-base=1.15.4
   - olefile=0.46
-  - openbabel=2.4.1
+  - openbabel=3.1.1
   - openssl=1.1.1h
   - pandas=0.23.4
   - pcre=8.43
