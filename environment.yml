@@ -60,7 +60,7 @@ dependencies:
   - numpy=1.15.4
   - numpy-base=1.15.4
   - olefile=0.46
-  - openbabel=3.1.1
+  - openbabel=2.4.1
   - openssl=1.1.1h
   - pandas=0.23.4
   - pcre=8.43
@@ -91,4 +91,4 @@ dependencies:
   - xz=5.2.5
   - zlib=1.2.11
   - zstd=1.4.4
-  - requests
+  - requests=2.24.0
